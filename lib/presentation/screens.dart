@@ -1,0 +1,13 @@
+export 'package:localduareapp/presentation/bottom_navbar/bottom_navbar.screen.dart';
+export 'package:localduareapp/presentation/cart/cart.screen.dart';
+export 'package:localduareapp/presentation/explore_category/explore_category.screen.dart';
+export 'package:localduareapp/presentation/get_started/get_started.screen.dart';
+export 'package:localduareapp/presentation/home/home.screen.dart';
+export 'package:localduareapp/presentation/leadboard/leadboard.screen.dart';
+export 'package:localduareapp/presentation/order_history_preview/order_history_preview.screen.dart';
+export 'package:localduareapp/presentation/profile/profile.screen.dart';
+export 'package:localduareapp/presentation/select_address/select_address.screen.dart';
+export 'package:localduareapp/presentation/select_phone_number/select_phone_number.screen.dart';
+export 'package:localduareapp/presentation/send_otp/send_otp.screen.dart';
+export 'package:localduareapp/presentation/splash/splash.screen.dart';
+export 'package:localduareapp/presentation/order_history/order_history.screen.dart';
