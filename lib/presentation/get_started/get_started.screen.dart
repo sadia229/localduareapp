@@ -55,9 +55,7 @@ class GetStartedScreen extends GetView<GetStartedController> {
       ),
       bottomNavigationBar: InkWell(
         borderRadius: BorderRadius.circular(4.0),
-        onTap: () {
-          Get.toNamed(Routes.SELECT_ADDRESS);
-        },
+        onTap: () => controller.checkToken(),
         child: Container(
           width: double.infinity,
           height: 56.0,

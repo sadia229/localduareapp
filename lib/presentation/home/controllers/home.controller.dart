@@ -1,12 +1,26 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:localduareapp/infrastructure/data/model/shop_model.dart';
+
+import '../../../infrastructure/static/project.constants.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
-
   final count = 0.obs;
+  final _isLoading = false.obs;
+
+  bool get isLoading => _isLoading.value;
+
+  final _shopList = Rxn<ShopModel>();
+
+  ShopModel? get shopList => _shopList.value;
+
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+    await fetchShops();
   }
 
   @override
@@ -14,10 +28,24 @@ class HomeController extends GetxController {
     super.onReady();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  Future<void> fetchShops() async {
+    try {
+      _isLoading.value = true;
+      final response = await http.get(
+        Uri.parse('$baseUrl/shops/public/get-all-shops'),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      );
+      if (response.statusCode == 200) {
+        _isLoading.value = false;
+        final responseBody = json.decode(response.body);
+        _shopList.value = ShopModel.fromJson(responseBody);
+        debugPrint("All restaurant List: ${_shopList.value?.toJson()}");
+      }
+    } catch (e) {
+      _isLoading.value = false;
+      debugPrint("shop error : ${e.toString()}");
+    }
   }
-
-  void increment() => count.value++;
 }

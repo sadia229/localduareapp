@@ -96,5 +96,25 @@ class Nav {
       page: () => const OrderHistoryPreviewScreen(),
       binding: OrderHistoryPreviewControllerBinding(),
     ),
+    GetPage(
+      name: Routes.SEARCH,
+      page: () => const SearchScreen(),
+      binding: SearchControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.COMING_SOON,
+      page: () => const ComingSoonScreen(),
+      binding: ComingSoonControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.GET_DELIVERY_ADDRESS,
+      page: () => const GetDeliveryAddressScreen(),
+      binding: GetDeliveryAddressControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.ADD_ADDRESS,
+      page: () => const AddAddressScreen(),
+      binding: AddAddressControllerBinding(),
+    ),
   ];
 }

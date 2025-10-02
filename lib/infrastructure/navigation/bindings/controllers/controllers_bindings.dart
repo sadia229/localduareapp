@@ -1,12 +1,16 @@
+export 'package:localduareapp/infrastructure/navigation/bindings/controllers/add_address.controller.binding.dart'; 
 export 'package:localduareapp/infrastructure/navigation/bindings/controllers/bottom_navbar.controller.binding.dart'; 
 export 'package:localduareapp/infrastructure/navigation/bindings/controllers/cart.controller.binding.dart'; 
+export 'package:localduareapp/infrastructure/navigation/bindings/controllers/coming_soon.controller.binding.dart'; 
 export 'package:localduareapp/infrastructure/navigation/bindings/controllers/explore_category.controller.binding.dart'; 
+export 'package:localduareapp/infrastructure/navigation/bindings/controllers/get_delivery_address.controller.binding.dart'; 
 export 'package:localduareapp/infrastructure/navigation/bindings/controllers/get_started.controller.binding.dart'; 
 export 'package:localduareapp/infrastructure/navigation/bindings/controllers/home.controller.binding.dart'; 
 export 'package:localduareapp/infrastructure/navigation/bindings/controllers/leadboard.controller.binding.dart'; 
 export 'package:localduareapp/infrastructure/navigation/bindings/controllers/order_history.controller.binding.dart'; 
 export 'package:localduareapp/infrastructure/navigation/bindings/controllers/order_history_preview.controller.binding.dart'; 
 export 'package:localduareapp/infrastructure/navigation/bindings/controllers/profile.controller.binding.dart'; 
+export 'package:localduareapp/infrastructure/navigation/bindings/controllers/search.controller.binding.dart'; 
 export 'package:localduareapp/infrastructure/navigation/bindings/controllers/select_address.controller.binding.dart'; 
 export 'package:localduareapp/infrastructure/navigation/bindings/controllers/select_phone_number.controller.binding.dart'; 
 export 'package:localduareapp/infrastructure/navigation/bindings/controllers/send_otp.controller.binding.dart'; 

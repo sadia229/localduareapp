@@ -41,15 +41,6 @@ class ExploreCategoryScreen extends GetView<ExploreCategoryController> {
                   ),
                 ),
               ),
-              // SliverToBoxAdapter(child: SizedBox(height: Get.height * 0.07)),
-              // SliverToBoxAdapter(
-              //   child: Center(
-              //     child: Image.asset(
-              //       "assets/images/get-started.png",
-              //       height: 87,
-              //     ),
-              //   ),
-              // ),
               SliverToBoxAdapter(child: SizedBox(height: 24.0)),
               SliverToBoxAdapter(
                 child: Center(
@@ -83,37 +74,43 @@ class ExploreCategoryScreen extends GetView<ExploreCategoryController> {
                       (context, index) {
                     return Container(
                       decoration: BoxDecoration(
-                        color: controller.getRandomColor(),
-                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(
-                            Icons.category,
-                            size: 40,
-                            color: Colors.white,
+                           Image.asset(
+                            "assets/images/restaurent.png",
+                            height: 64,
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 16),
                           Text(
-                            "Item ",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                            "Restaurants",
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontFamily: GoogleFonts.manrope().fontFamily,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
                     );
                   },
-                  childCount: 10,
+                  childCount: 1,
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
-                  childAspectRatio: 0.9,
+                  childAspectRatio: 1,
                 ),
               ),
               SliverToBoxAdapter(child: SizedBox(height: 24.0)),

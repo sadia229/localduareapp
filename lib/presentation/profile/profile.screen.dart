@@ -7,54 +7,66 @@ import '../../infrastructure/theme/app.colors.dart';
 import 'controllers/profile.controller.dart';
 
 class ProfileMenuItem extends StatelessWidget {
-  final IconData icon;
   final String title;
+  final String? balance;
+  final bool? showBalance;
   final VoidCallback onTap;
-  final bool showDivider;
 
   const ProfileMenuItem({
     Key? key,
-    required this.icon,
     required this.title,
+    this.balance,
+    this.showBalance = false,
     required this.onTap,
-    this.showDivider = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          leading: Container(
-            padding: const EdgeInsets.only(left: 8.0,right: 8.0),
-            decoration: BoxDecoration(
-              color: AppColors.light.primaryColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(icon, color: AppColors.light.primaryColor, size: 22),
-          ),
-          title: Text(
-            title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-          ),
-          trailing: Icon(Icons.arrow_forward_ios_rounded, 
-              size: 16, 
-              color: Colors.grey[400]
-          ),
-          onTap: onTap,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12.0),
+      child: Container(
+        padding: EdgeInsets.all(16.0),
+        margin: EdgeInsets.only(bottom: 4.0, left: 16.0, right: 16.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
         ),
-        if (showDivider)
-          const Divider(height: 1, indent: 16, endIndent: 16, thickness: 0.5),
-      ],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: GoogleFonts.manrope().fontFamily,
+                  ),
+            ),
+            if (showBalance == true)
+              Text(
+                balance ?? "",
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: GoogleFonts.manrope().fontFamily,
+                      color: AppColors.light.buttonGradient1,
+                    ),
+              ),
+            if (showBalance == false)
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 16,
+                color: Colors.black,
+              ),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class ProfileScreen extends GetView<ProfileController> {
   const ProfileScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,10 +109,10 @@ class ProfileScreen extends GetView<ProfileController> {
                     Text(
                       "Account",
                       style:
-                      Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontFamily: GoogleFonts.manrope().fontFamily,
-                        fontWeight: FontWeight.bold,
-                      ),
+                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontFamily: GoogleFonts.manrope().fontFamily,
+                                fontWeight: FontWeight.bold,
+                              ),
                     ),
                   ],
                 ),
@@ -109,128 +121,68 @@ class ProfileScreen extends GetView<ProfileController> {
             SliverToBoxAdapter(child: SizedBox(height: 16.0)),
             // Menu Items
             SliverToBoxAdapter(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    ProfileMenuItem(
-                      icon: Icons.shopping_bag_outlined,
-                      title: 'My Orders',
-                      onTap: () {},
-                    ),
-                    ProfileMenuItem(
-                      icon: Icons.location_on_outlined,
-                      title: 'My Addresses',
-                      onTap: () {},
-                    ),
-                    ProfileMenuItem(
-                      icon: Icons.credit_card_outlined,
-                      title: 'Payment Methods',
-                      onTap: () {},
-                    ),
-                    ProfileMenuItem(
-                      icon: Icons.favorite_border_rounded,
-                      title: 'My Wishlist',
-                      onTap: () {},
-                    ),
-                    ProfileMenuItem(
-                      icon: Icons.notifications_none_rounded,
-                      title: 'Notifications',
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
-            
-            // Support Section
-            SliverToBoxAdapter(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    ProfileMenuItem(
-                      icon: Icons.help_outline_rounded,
-                      title: 'Help Center',
-                      onTap: () {},
-                    ),
-                    ProfileMenuItem(
-                      icon: Icons.info_outline_rounded,
-                      title: 'About Us',
-                      onTap: () {},
-                    ),
-                    ProfileMenuItem(
-                      icon: Icons.logout_rounded,
-                      title: 'Logout',
-                      onTap: () {},
-                      showDivider: false,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            
-            const SliverToBoxAdapter(child: SizedBox(height: 24)),
-            
-            // App Version
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 24.0),
-                child: Text(
-                  'Version 1.0.0',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey[500],
+              child: Column(
+                children: [
+                  ProfileMenuItem(
+                    title: 'Delivery Address',
+                    onTap: () {},
+                    balance: 'BDT 5,000',
+                    showBalance: true,
                   ),
-                  textAlign: TextAlign.center,
-                ),
+                  ProfileMenuItem(
+                    title: 'Delivery Address',
+                    onTap: () {},
+                  ),
+                  ProfileMenuItem(
+                    title: 'Order On Whatsapp',
+                    onTap: () {},
+                  ),
+                  ProfileMenuItem(
+                    title: 'Log in / Sign out',
+                    onTap: () {},
+                  ),
+                  ProfileMenuItem(
+                    title: 'Terms & Conditions',
+                    onTap: () {},
+                  ),
+                  ProfileMenuItem(
+                    title: 'Privacy Policy',
+                    onTap: () {},
+                  ),
+                  ProfileMenuItem(
+                    title: 'About Us',
+                    onTap: () {},
+                  ),
+                  ProfileMenuItem(
+                    title: 'Logout',
+                    onTap: () {},
+                  ),
+                ],
               ),
             ),
+            const SliverToBoxAdapter(child: SizedBox(height: 24)),
           ],
         ),
       ),
     );
   }
-  
+
   Widget _buildStatItem(BuildContext context, String value, String label) {
     return Column(
       children: [
         Text(
           value,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: AppColors.light.primaryColor,
-          ),
+                fontWeight: FontWeight.bold,
+                color: AppColors.light.primaryColor,
+              ),
         ),
         const SizedBox(height: 4),
         Text(
           label,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Colors.grey[600],
-          ),
+                color: Colors.grey[600],
+              ),
         ),
       ],
     );

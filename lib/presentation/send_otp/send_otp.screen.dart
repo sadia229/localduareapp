@@ -55,15 +55,15 @@ class SendOtpScreen extends GetView<SendOtpController> {
               SizedBox(height: 16.0),
               PinInputTextFormField(
                 autoFocus: true,
-                cursor: Cursor(color: AppColors.light.borderColor3,width: 5,height: 8),
+                cursor: Cursor(
+                    color: AppColors.light.borderColor3, width: 5, height: 8),
                 controller: controller.otpController,
-                validator: (value) =>
-                    FormValidator.validate(
-                      value,
-                      required: true,
-                      min: 6,
-                      minMessage: "OTP must be 6 digits",
-                    ),
+                validator: (value) => FormValidator.validate(
+                  value,
+                  required: true,
+                  min: 6,
+                  minMessage: "OTP must be 6 digits",
+                ),
                 // onChanged: (value) =>
                 // value.length == 6
                 //     ? controller.verifyOtp(value)
@@ -78,20 +78,20 @@ class SendOtpScreen extends GetView<SendOtpController> {
                     //const Color(0xffFAFAFA),
                   ),
                   textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    fontFamily: GoogleFonts.manrope().fontFamily,
-                    color: Colors.black,
-                  ),
-                  errorTextStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    fontFamily: GoogleFonts.manrope().fontFamily,
-                    color: Colors.red,
-                  ),
+                        fontFamily: GoogleFonts.manrope().fontFamily,
+                        color: Colors.black,
+                      ),
+                  errorTextStyle:
+                      Theme.of(context).textTheme.labelLarge?.copyWith(
+                            fontFamily: GoogleFonts.manrope().fontFamily,
+                            color: Colors.red,
+                          ),
                   strokeColorBuilder: PinListenColorBuilder(
                     AppColors.light.borderColor3,
                     AppColors.light.borderColor3,
                   ),
                 ),
               ),
-
               SizedBox(height: 24.0),
               InkWell(
                 onTap: null,
@@ -119,11 +119,15 @@ class SendOtpScreen extends GetView<SendOtpController> {
                   ),
                 ),
               ),
-
               SizedBox(height: 12.0),
-              AppButton(text: "Submit", onTap: () {
-                Get.toNamed(Routes.EXPLORE_CATEGORY);
-                debugPrint("print otp:${controller.otpController}");
+              Obx(() {
+                if (controller.isOtpLoading) {
+                  return AppLoadingButton();
+                }
+                return AppButton(
+                  text: "Submit",
+                  onTap: () => controller.verifyOtp(),
+                );
               }),
             ],
           ),

@@ -40,3 +40,27 @@ class AppButton extends StatelessWidget {
     );
   }
 }
+
+class AppLoadingButton extends StatelessWidget {
+  const AppLoadingButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 56.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4.0),
+        gradient: LinearGradient(
+          colors: [
+            AppColors.light.buttonGradient1,
+            AppColors.light.buttonGradient2,
+          ],
+        ),
+      ),
+      child: Center(
+        child: CircularProgressIndicator(color: Colors.white)
+      ),
+    );
+  }
+}

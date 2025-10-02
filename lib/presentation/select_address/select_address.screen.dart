@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:localduareapp/infrastructure/navigation/routes.dart';
 import 'package:localduareapp/infrastructure/theme/app.colors.dart';
 import 'package:localduareapp/presentation/shared/button/app.button.dart';
 import 'package:localduareapp/presentation/shared/common/app.background.dart';
@@ -46,43 +45,73 @@ class SelectAddressScreen extends GetView<SelectAddressController> {
                     ),
               ),
               SizedBox(height: 16.0),
-              Container(
-                width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4.0),
-                  border: Border.all(color: AppColors.light.borderColor3),
-                ),
-                child: Obx(() {
-                  return DropdownButton<String>(
-                    isExpanded: true,
-                    value: controller.selectedArea.value,
-                    onChanged: (String? newValue) {
-                      controller.selectedArea.value = newValue!;
-                    },
-                    underline: const SizedBox(),
-                    items: <String>['Area 1', 'Area 2', 'Area 3']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge
-                              ?.copyWith(
-                                fontFamily: GoogleFonts.manrope().fontFamily,
-                                color: Colors.black,
-                              ),
-                        ),
-                      );
-                    }).toList(),
-                  );
-                }),
-              ),
+              Obx(() {
+                if (controller.isLoadingArea) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 4.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: AppColors.light.borderColor3),
+                  ),
+                  child: Obx(() {
+                    return DropdownButton<String>(
+                      isExpanded: true,
+                      value: controller.selectedArea.value,
+                      onChanged: (String? newValue) {
+                        if (newValue != null) {
+                          controller.selectedArea.value = newValue;
+                          debugPrint("Selected Area: $newValue");
+                          controller.franchisesList?.data?.forEach((f) {
+                            debugPrint("Available ID: '${f.sId}'");
+                          });
+
+                          final selectedFranchise =
+                              controller.franchisesList?.data?.firstWhereOrNull(
+                                  (f) => f.sId?.trim() == newValue.trim());
+
+                          if (selectedFranchise != null) {
+                            debugPrint(
+                                "Selected Franchise: ${selectedFranchise.toJson()}");
+                            controller.selectedFranchiseId.value =
+                                selectedFranchise.sId ?? '';
+                          } else {
+                            debugPrint("No matching franchise found.");
+                          }
+                        }
+                      },
+                      underline: const SizedBox(),
+                      items: controller.franchisesList?.data?.map((franchise) {
+                        return DropdownMenuItem<String>(
+                          value: franchise.sId ?? '',
+                          child: Text(
+                            franchise.name ?? 'Unnamed Franchise',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge
+                                ?.copyWith(
+                                  fontFamily: GoogleFonts.manrope().fontFamily,
+                                  color: Colors.black,
+                                ),
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  }),
+                );
+              }),
               SizedBox(height: 12.0),
-              AppButton(text: "Submit", onTap: () {Get.toNamed(Routes.SELECT_PHONE_NUMBER);}),
+              AppButton(
+                text: "Submit",
+                onTap: () {
+                  debugPrint(
+                      "Selected Franchise ID: ${controller.selectedFranchiseId.value}");
+                  controller.saveFranchiseId();
+                },
+              ),
             ],
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../infrastructure/theme/app.colors.dart';
+import '../coming_soon/coming_soon.screen.dart';
 import '../home/home.screen.dart';
 import '../leadboard/leadboard.screen.dart';
 import '../order_history/order_history.screen.dart';
@@ -26,7 +27,8 @@ class BottomNavbarScreen extends GetView<BottomNavbarController> {
               children: [
                 const HomeScreen(),
                 const OrderHistoryScreen(),
-                const LeadboardScreen(),
+                // const LeadboardScreen(),
+                const ComingSoonScreen(),
                 const ProfileScreen(),
               ],
             );
@@ -49,7 +51,7 @@ class BottomNavbarScreen extends GetView<BottomNavbarController> {
         AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           height: controller.bottomBarHeight.value,
-          margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(50.0),
@@ -89,7 +91,7 @@ class BottomNavbarScreen extends GetView<BottomNavbarController> {
       onTap: () => controller.changePage(index),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.light.buttonGradient1 : Colors
               .transparent,

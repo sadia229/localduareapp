@@ -113,13 +113,15 @@ class SelectPhoneNumberScreen extends GetView<SelectPhoneNumberController> {
                       );
               }),
               SizedBox(height: 12.0),
-              AppButton(
+              Obx(() {
+                if(controller.isLoading){
+                  return AppLoadingButton();
+                }
+                return AppButton(
                   text: "Log In",
-                  onTap: () {
-                    Get.toNamed(Routes.SEND_OTP,arguments: {
-                      "phoneNumber":controller.phoneNumberTextController.text,
-                    },);
-                  }),
+                  onTap: () => controller.sendPhone(),
+                );
+              }),
             ],
           ),
         ),
