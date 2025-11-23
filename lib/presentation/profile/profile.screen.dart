@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:localduareapp/infrastructure/navigation/routes.dart';
 import 'package:localduareapp/presentation/shared/common/app.background.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../infrastructure/theme/app.colors.dart';
@@ -76,7 +77,7 @@ class ProfileScreen extends GetView<ProfileController> {
             SliverToBoxAdapter(
               child: Container(
                 height: Get.height * 0.12,
-                margin: const EdgeInsets.only(top: 24.0),
+                padding: const EdgeInsets.only(top: 24.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -124,14 +125,17 @@ class ProfileScreen extends GetView<ProfileController> {
               child: Column(
                 children: [
                   ProfileMenuItem(
-                    title: 'Delivery Address',
+                    title: 'My Balance`',
                     onTap: () {},
                     balance: 'BDT 5,000',
                     showBalance: true,
                   ),
                   ProfileMenuItem(
                     title: 'Delivery Address',
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(Routes.GET_DELIVERY_ADDRESS);
+                      // Get.toNamed(Routes.PROFILE_ADD_ADDRESS);
+                    },
                   ),
                   ProfileMenuItem(
                     title: 'Order On Whatsapp',
@@ -141,22 +145,22 @@ class ProfileScreen extends GetView<ProfileController> {
                     title: 'Log in / Sign out',
                     onTap: () {},
                   ),
-                  ProfileMenuItem(
-                    title: 'Terms & Conditions',
-                    onTap: () {},
-                  ),
-                  ProfileMenuItem(
-                    title: 'Privacy Policy',
-                    onTap: () {},
-                  ),
-                  ProfileMenuItem(
-                    title: 'About Us',
-                    onTap: () {},
-                  ),
-                  ProfileMenuItem(
-                    title: 'Logout',
-                    onTap: () {},
-                  ),
+                  // ProfileMenuItem(
+                  //   title: 'Terms & Conditions',
+                  //   onTap: () {},
+                  // ),
+                  // ProfileMenuItem(
+                  //   title: 'Privacy Policy',
+                  //   onTap: () {},
+                  // ),
+                  // ProfileMenuItem(
+                  //   title: 'About Us',
+                  //   onTap: () {},
+                  // ),
+                  // ProfileMenuItem(
+                  //   title: 'Logout',
+                  //   onTap: () {},
+                  // ),
                 ],
               ),
             ),

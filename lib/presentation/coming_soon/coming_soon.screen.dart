@@ -23,14 +23,15 @@ class ComingSoonScreen extends GetView<ComingSoonController> {
                 height: Get.height * 0.35,
               ),
             ),
+            const SizedBox(height: 24),
             Center(
               child: Text(
-                "Something awesome is cooking\nComing Soon",
+                "Coming Soon.....",
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       fontFamily: GoogleFonts.manrope().fontFamily,
-                      color: Colors.black54,
+                      color: Colors.blue.shade800,
                     ),
               ),
             ),

@@ -149,7 +149,7 @@ class OrderHistoryPreviewScreen extends GetView<OrderHistoryPreviewController> {
                     Text(
                       "Order Id  #${controller.orderId.value.toString()}",
                       style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          Theme.of(context).textTheme.titleMedium?.copyWith(
                                 fontFamily: GoogleFonts.manrope().fontFamily,
                                 fontWeight: FontWeight.bold,
                               ),

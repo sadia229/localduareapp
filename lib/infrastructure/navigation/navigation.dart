@@ -113,8 +113,58 @@ class Nav {
     ),
     GetPage(
       name: Routes.ADD_ADDRESS,
-      page: () => const AddAddressScreen(),
+      page: () => AddAddressScreen(),
       binding: AddAddressControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.SHOP_DETAILS,
+      page: () => const ShopDetailsScreen(),
+      binding: ShopDetailsControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.SHOP_MENU,
+      page: () => const ShopMenuScreen(),
+      binding: ShopMenuControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.CHECKOUT,
+      page: () => const CheckoutScreen(),
+      binding: CheckoutControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.CHECKOUT,
+      page: () => const CheckoutScreen(),
+      binding: CheckoutControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.PROFILE_ADD_ADDRESS,
+      page: () => const ProfileAddAddressScreen(),
+      binding: ProfileAddAddressControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.ORDER_PLACE_SUCCESS,
+      page: () => const OrderPlaceSuccessScreen(),
+      binding: OrderPlaceSuccessControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.BKASH_WEBVIEW,
+      page: () => const BkashWebviewScreen(),
+      binding: BkashWebviewControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.ORDER_HISTORY_DETAILS,
+      page: () => const OrderHistoryDetailsScreen(),
+      binding: OrderHistoryDetailsControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.ORDER_HISTORY_DETAILS_STATUS,
+      page: () => const OrderHistoryDetailsStatusScreen(),
+      binding: OrderHistoryDetailsStatusControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.TRACK_ORDER,
+      page: () => const TrackOrderScreen(),
+      binding: TrackOrderControllerBinding(),
     ),
   ];
 }

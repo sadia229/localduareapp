@@ -34,33 +34,62 @@ class SelectAddressController extends GetxController {
       _isLoadingArea.value = true;
       final response = await http.get(
         Uri.parse('$baseUrl/franchises/active'),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: {"Content-Type": "application/json"},
       );
+
+      debugPrint('Franchises API Response: ${response.body}');
+
       if (response.statusCode == 200) {
         final responseBody = json.decode(response.body);
         _franchisesList.value = FranchisesModel.fromJson(responseBody);
-        if (_franchisesList.value?.data?.isNotEmpty ?? false) {
-          selectedArea.value = _franchisesList.value!.data!.first.sId ?? '';
+
+        final franchises = _franchisesList.value?.franchises ?? [];
+        if (franchises.isNotEmpty) {
+          selectedFranchiseId.value = franchises.first.id;
+          selectedArea.value = franchises.first.id;
+        } else {
+          debugPrint('No franchises found.');
         }
-        debugPrint("Franchises List: ${_franchisesList.value?.toJson()}");
+      } else {
+        throw Exception('Failed to load franchises.');
       }
-    } catch (e) {
-      debugPrint(e.toString());
+    } catch (e, st) {
+      debugPrint('Error in fetchFranchises: $e\n$st');
+      Get.snackbar(
+        'Error',
+        'Failed to load franchises. Please try again later.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     } finally {
       _isLoadingArea.value = false;
     }
   }
 
   void saveFranchiseId() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
+
+    // Save selected franchise ID
     await prefs.setString('franchiseId', selectedFranchiseId.value);
-    final franchiseId = prefs.getString('franchiseId');
-    if(franchiseId != null){
-      Get.toNamed(Routes.SELECT_PHONE_NUMBER);
+
+    // Find the selected franchise
+    final selectedFranchise = _franchisesList.value?.franchises
+        .firstWhereOrNull((f) => f.id == selectedFranchiseId.value);
+
+    // Save coordinates if available
+    if (selectedFranchise?.area?.coordinates != null) {
+      final coordinatesJson =
+      jsonEncode(selectedFranchise!.area!.coordinates!.toJson());
+      await prefs.setString('coordinates', coordinatesJson);
+      debugPrint('Saved Coordinates: $coordinatesJson');
+    } else {
+      debugPrint('No coordinates found for selected franchise.');
     }
-    else{
+
+    // Verify and navigate
+    final franchiseId = prefs.getString('franchiseId');
+    if (franchiseId != null) {
+      Get.toNamed(Routes.BOTTOM_NAVBAR);
+    } else {
       debugPrint("Franchise ID is null $franchiseId");
     }
   }

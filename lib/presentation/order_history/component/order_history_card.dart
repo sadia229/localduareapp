@@ -126,50 +126,68 @@ class OrderHistoryCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: onReOrder,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.light.buttonGradient1,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                  ),
-                  child: Text(
-                    'Re -order',
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: Colors.white,
-                          fontFamily: GoogleFonts.manrope().fontFamily,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
+          SizedBox(
+            width: Get.width,
+            child: ElevatedButton(
+              onPressed: onPreview,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.light.buttonGradient1,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
                 ),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: onPreview,
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: AppColors.light.buttonGradient1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                  ),
-                  child: Text(
-                    'Preview',
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: Colors.black,
-                          fontFamily: GoogleFonts.manrope().fontFamily,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
+              child: Text(
+                'Preview',
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: Colors.white,
+                  fontFamily: GoogleFonts.manrope().fontFamily,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-            ],
+            ),
           ),
+          // Row(
+          //   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     // Expanded(
+          //     //   child: ElevatedButton(
+          //     //     onPressed: onReOrder,
+          //     //     style: ElevatedButton.styleFrom(
+          //     //       backgroundColor: AppColors.light.buttonGradient1,
+          //     //       shape: RoundedRectangleBorder(
+          //     //         borderRadius: BorderRadius.circular(4),
+          //     //       ),
+          //     //     ),
+          //     //     child: Text(
+          //     //       'Re -order',
+          //     //       style: Theme.of(context).textTheme.labelMedium?.copyWith(
+          //     //             color: Colors.white,
+          //     //             fontFamily: GoogleFonts.manrope().fontFamily,
+          //     //             fontWeight: FontWeight.w600,
+          //     //           ),
+          //     //     ),
+          //     //   ),
+          //     // ),
+          //     // const SizedBox(width: 12),
+          //     ElevatedButton(
+          //       onPressed: onPreview,
+          //       style: ElevatedButton.styleFrom(
+          //         backgroundColor: AppColors.light.buttonGradient1,
+          //         shape: RoundedRectangleBorder(
+          //           borderRadius: BorderRadius.circular(4),
+          //         ),
+          //       ),
+          //       child: Text(
+          //         'Preview',
+          //         style: Theme.of(context).textTheme.labelMedium?.copyWith(
+          //           color: Colors.white,
+          //               fontFamily: GoogleFonts.manrope().fontFamily,
+          //               fontWeight: FontWeight.w600,
+          //             ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

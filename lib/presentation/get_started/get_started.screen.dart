@@ -60,7 +60,7 @@ class GetStartedScreen extends GetView<GetStartedController> {
           width: double.infinity,
           height: 56.0,
           margin: EdgeInsets.symmetric(horizontal: 16.0).copyWith(
-            bottom: 16.0,
+            bottom: Get.height * 0.07,
           ),
           padding: EdgeInsets.symmetric(horizontal: 16.0),
           decoration: BoxDecoration(

@@ -5,7 +5,7 @@ class OrderHistoryPreviewController extends GetxController {
   //TODO: Implement OrderHistoryPreviewController
 
   final count = 0.obs;
-  final orderId = 0.obs;
+  final orderId = "".obs;
   @override
   void onInit() {
     orderId.value = Get.arguments["orderId"];

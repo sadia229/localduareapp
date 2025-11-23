@@ -22,112 +22,148 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: AppBackground(
-          child: CustomScrollView(
-            slivers: [
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Category",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge
-                                  ?.copyWith(
-                                    fontFamily:
-                                        GoogleFonts.manrope().fontFamily,
-                                    color: Colors.black,
+      body: AppBackground(
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(child: SizedBox(height: Get.height * 0.06)),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Category",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge
+                                ?.copyWith(
+                                  fontFamily: GoogleFonts.manrope().fontFamily,
+                                  color: Colors.black,
+                                ),
+                          ),
+                          DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: categoryItems.first,
+                              isExpanded: false,
+                              icon:
+                                  const Icon(Icons.keyboard_arrow_down_rounded),
+                              items: categoryItems.map((String item) {
+                                return DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall
+                                        ?.copyWith(
+                                          fontFamily:
+                                              GoogleFonts.manrope().fontFamily,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                   ),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                if (newValue != null) {
+                                  // Handle category change
+                                }
+                              },
                             ),
-                            DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                value: categoryItems.first,
-                                isExpanded: false,
-                                icon: const Icon(
-                                    Icons.keyboard_arrow_down_rounded),
-                                items: categoryItems.map((String item) {
-                                  return DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(
-                                            fontFamily: GoogleFonts.manrope()
-                                                .fontFamily,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  if (newValue != null) {
-                                    // Handle category change
-                                  }
-                                },
-                              ),
-                            ),
-                          ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: Image.asset(
+                          "assets/images/Bag 4.png",
+                          height: 24.0,
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: Image.asset(
-                            "assets/images/Bag 4.png",
-                            height: 24.0,
-                          ),
-                        ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                child: Text(
+                  "Order",
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontFamily: GoogleFonts.manrope().fontFamily,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                  child: Text(
-                    "Order",
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontFamily: GoogleFonts.manrope().fontFamily,
-                          fontWeight: FontWeight.bold,
-                        ),
+            ),
+            Obx(() {
+              if (controller.isLoading.value) {
+                return SliverToBoxAdapter(
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 32.0),
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
-                ),
-              ),
-              SliverList(
+                );
+              }
+
+              final orders = controller.orderHistoryList.value?.data ?? [];
+
+              if (orders.isEmpty) {
+                return SliverToBoxAdapter(
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 32.0),
+                      child: Text(
+                        "No Order History",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                  ),
+                );
+              }
+
+              return SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    final isLast = index == 9;
+                    final order =
+                        controller.orderHistoryList.value?.data[index];
+
                     return Padding(
-                      padding: EdgeInsets.only(
-                          bottom: isLast ? 100.0 : 16.0,
-                          left: 16.0,
-                          right: 16.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0),
                       child: OrderHistoryCard(
-                        orderId: '#12344',
-                        companyName: 'Pizza Hut',
-                        orderDateTime: 'Yesterday, 7:45 PM',
-                        price: "24.50",
+                        orderId: order?.orderId ?? "",
+                        companyName: order?.shopId.name ?? "",
+                        orderDateTime: controller
+                            .formatOrderDate(order?.orderDate.toString() ?? ""),
+                        price: order?.subtotal.toString() ?? "",
                         onPreview: () {
                           Get.toNamed(
-                            Routes.ORDER_HISTORY_PREVIEW,
+                            Routes.ORDER_HISTORY_DETAILS,
                             arguments: {
-                              "orderId": 12344,
+                              "orderId": order?.orderId,
+                              "orderDate": order?.orderDate.toString(),
+                              "shopName": order?.shopId.name ?? "",
+                              "subtotal": order?.subtotal,
+                              "deliveryCharge": order?.deliveryCharge,
+                              "total": order?.grandTotal,
+                              "orderItems": order?.items,
+                              "payment_method": order?.paymentMethod,
+                              "payment_status": order?.paymentStatus,
+                              "status": order?.status,
                             },
                           );
                         },
@@ -137,12 +173,13 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
                       ),
                     );
                   },
-                  childCount: 10,
+                  childCount:
+                      controller.orderHistoryList.value?.data.length ?? 0,
                 ),
-              ),
-              SliverToBoxAdapter(child: const SizedBox(height: 24)),
-            ],
-          ),
+              );
+            }),
+            SliverToBoxAdapter(child: const SizedBox(height: 160)),
+          ],
         ),
       ),
     );

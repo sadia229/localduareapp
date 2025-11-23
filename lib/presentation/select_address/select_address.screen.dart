@@ -60,33 +60,26 @@ class SelectAddressScreen extends GetView<SelectAddressController> {
                   child: Obx(() {
                     return DropdownButton<String>(
                       isExpanded: true,
-                      value: controller.selectedArea.value,
+                      value: controller.selectedArea.value.isEmpty
+                          ? null
+                          : controller.selectedArea.value,
                       onChanged: (String? newValue) {
                         if (newValue != null) {
                           controller.selectedArea.value = newValue;
-                          debugPrint("Selected Area: $newValue");
-                          controller.franchisesList?.data?.forEach((f) {
-                            debugPrint("Available ID: '${f.sId}'");
-                          });
-
-                          final selectedFranchise =
-                              controller.franchisesList?.data?.firstWhereOrNull(
-                                  (f) => f.sId?.trim() == newValue.trim());
-
+                          final selectedFranchise = controller
+                              .franchisesList?.franchises
+                              .firstWhereOrNull((f) => f.id == newValue);
                           if (selectedFranchise != null) {
-                            debugPrint(
-                                "Selected Franchise: ${selectedFranchise.toJson()}");
                             controller.selectedFranchiseId.value =
-                                selectedFranchise.sId ?? '';
-                          } else {
-                            debugPrint("No matching franchise found.");
+                                selectedFranchise.id;
                           }
                         }
                       },
                       underline: const SizedBox(),
-                      items: controller.franchisesList?.data?.map((franchise) {
+                      items: controller.franchisesList?.franchises
+                          .map((franchise) {
                         return DropdownMenuItem<String>(
-                          value: franchise.sId ?? '',
+                          value: franchise.id ?? '',
                           child: Text(
                             franchise.name ?? 'Unnamed Franchise',
                             style: Theme.of(context)

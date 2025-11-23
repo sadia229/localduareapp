@@ -15,5 +15,7 @@ class _LightColors {
   final Color buttonGradient1 = const Color(0xFF0156A7);
   final Color buttonGradient2 = const Color(0xFF2E3293);
   final Color buttonBackground = const Color(0xFFF7F7F7);
+  final Color background = const Color(0xFFEEF5FF);
+  final Color lightGray = const Color(0xFFF7F7F7);
 }
 

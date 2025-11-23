@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:text_form_field_validator/text_form_field_validator.dart';
 
 import '../../infrastructure/navigation/routes.dart';
@@ -18,118 +20,156 @@ class SendOtpScreen extends GetView<SendOtpController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AppBackground(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: Get.height * 0.08),
-              InkWell(
-                onTap: () {
-                  Get.back();
-                },
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.0),
-                    color: Colors.white,
+    return WillPopScope(
+      onWillPop: () async {
+        return await showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Exit the app?'),
+                content:
+                    const Text('Confirm whether you want to exit the app।'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('No'),
                   ),
-                  child: Image.asset(
-                    AppAssets.light.icons.backButton,
-                    height: 24.0,
+                  TextButton(
+                    onPressed: () => SystemNavigator.pop(),
+                    child: const Text('Yes'),
                   ),
-                ),
+                ],
               ),
-              SizedBox(height: 16.0),
-              HeaderText(text: "Authentication\nRequired"),
-              SizedBox(height: 8.0),
-              Text(
-                "A one-time code has been sent to your number",
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontFamily: GoogleFonts.manrope().fontFamily,
-                      color: Colors.black,
+            ) ??
+            false;
+      },
+      child: Scaffold(
+        body: AppBackground(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: AutofillGroup(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: Get.height * 0.08),
+                  InkWell(
+                    onTap: () {
+                      //Get.back();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.0),
+                        color: Colors.white,
+                      ),
+                      child: Image.asset(
+                        AppAssets.light.icons.backButton,
+                        height: 24.0,
+                      ),
                     ),
-              ),
-              SizedBox(height: 16.0),
-              PinInputTextFormField(
-                autoFocus: true,
-                cursor: Cursor(
-                    color: AppColors.light.borderColor3, width: 5, height: 8),
-                controller: controller.otpController,
-                validator: (value) => FormValidator.validate(
-                  value,
-                  required: true,
-                  min: 6,
-                  minMessage: "OTP must be 6 digits",
-                ),
-                // onChanged: (value) =>
-                // value.length == 6
-                //     ? controller.verifyOtp(value)
-                //     : null,
-                decoration: BoxLooseDecoration(
-                  radius: Radius.circular(4.0),
-                  gapSpace: 8.0,
-                  bgColorBuilder: PinListenColorBuilder(
-                    Colors.transparent,
-                    Colors.transparent,
-                    //const Color(0xffFAFAFA),
-                    //const Color(0xffFAFAFA),
                   ),
-                  textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  SizedBox(height: 16.0),
+                  HeaderText(text: "Authentication\nRequired"),
+                  SizedBox(height: 8.0),
+                  Text(
+                    "A one-time code has been sent to your number",
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          fontFamily: GoogleFonts.manrope().fontFamily,
+                          color: Colors.black,
+                        ),
+                  ),
+                  SizedBox(height: 16.0),
+                  PinFieldAutoFill(
+                    controller: controller.otpController,
+                    codeLength: 6,
+                    autoFocus: true,
+                    decoration: UnderlineDecoration(
+                      colorBuilder:
+                      FixedColorBuilder(AppColors.light.borderColor3),
+                      gapSpace: 8,
+                      textStyle:
+                      Theme.of(context).textTheme.labelLarge?.copyWith(
                         fontFamily: GoogleFonts.manrope().fontFamily,
                         color: Colors.black,
                       ),
-                  errorTextStyle:
-                      Theme.of(context).textTheme.labelLarge?.copyWith(
-                            fontFamily: GoogleFonts.manrope().fontFamily,
-                            color: Colors.red,
-                          ),
-                  strokeColorBuilder: PinListenColorBuilder(
-                    AppColors.light.borderColor3,
-                    AppColors.light.borderColor3,
+                    ),
+                    currentCode: controller.otpController.text,
+                    onCodeChanged: controller.onPinFieldChanged,
                   ),
-                ),
-              ),
-              SizedBox(height: 24.0),
-              InkWell(
-                onTap: null,
-                child: Center(
-                  child: Text.rich(
-                    TextSpan(
-                      children: [
+                  // PinInputTextFormField(
+                  //   autoFocus: true,
+                  //   cursor: Cursor(
+                  //       color: AppColors.light.borderColor3, width: 5, height: 8),
+                  //   controller: controller.otpController,
+                  //   validator: (value) => FormValidator.validate(
+                  //     value,
+                  //     required: true,
+                  //     min: 6,
+                  //     minMessage: "OTP must be 6 digits",
+                  //   ),
+                  //   decoration: BoxLooseDecoration(
+                  //     radius: Radius.circular(4.0),
+                  //     gapSpace: 8.0,
+                  //     bgColorBuilder: PinListenColorBuilder(
+                  //       Colors.transparent,
+                  //       Colors.transparent,
+                  //       //const Color(0xffFAFAFA),
+                  //       //const Color(0xffFAFAFA),
+                  //     ),
+                  //     textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  //           fontFamily: GoogleFonts.manrope().fontFamily,
+                  //           color: Colors.black,
+                  //         ),
+                  //     errorTextStyle:
+                  //         Theme.of(context).textTheme.labelLarge?.copyWith(
+                  //               fontFamily: GoogleFonts.manrope().fontFamily,
+                  //               color: Colors.red,
+                  //             ),
+                  //     strokeColorBuilder: PinListenColorBuilder(
+                  //       AppColors.light.borderColor3,
+                  //       AppColors.light.borderColor3,
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(height: 24.0),
+                  InkWell(
+                    onTap: null,
+                    child: Center(
+                      child: Text.rich(
                         TextSpan(
-                          text: "Didn't gey the code yet? ",
-                          style: GoogleFonts.manrope(
-                            fontSize: 12,
-                            color: Colors.black,
-                          ),
+                          children: [
+                            TextSpan(
+                              text: "Didn't gey the code yet? ",
+                              style: GoogleFonts.manrope(
+                                fontSize: 12,
+                                color: Colors.black,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'Resend',
+                              style: GoogleFonts.manrope(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
-                        TextSpan(
-                          text: 'Resend',
-                          style: GoogleFonts.manrope(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                  SizedBox(height: 12.0),
+                  Obx(() {
+                    if (controller.isOtpLoading) {
+                      return AppLoadingButton();
+                    }
+                    return AppButton(
+                      text: "Submit",
+                      onTap: () => controller.verifyOtp(),
+                    );
+                  }),
+                ],
               ),
-              SizedBox(height: 12.0),
-              Obx(() {
-                if (controller.isOtpLoading) {
-                  return AppLoadingButton();
-                }
-                return AppButton(
-                  text: "Submit",
-                  onTap: () => controller.verifyOtp(),
-                );
-              }),
-            ],
+            ),
           ),
         ),
       ),

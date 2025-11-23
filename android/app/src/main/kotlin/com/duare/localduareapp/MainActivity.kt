@@ -1,4 +1,4 @@
-package com.duare.localduareapp
+package net.duare.duare
 
 import io.flutter.embedding.android.FlutterActivity
 

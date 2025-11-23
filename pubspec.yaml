@@ -2,21 +2,29 @@ name: localduareapp
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
-  sdk: '>=2.19.6 <3.0.0'
+environment:
+  sdk: ^3.6.0
 
-dependencies: 
-  cupertino_icons: ^1.0.2
-  get: 4.6.5
+dependencies:
+  cupertino_icons: ^1.0.8
+  get: ^4.7.2
   google_fonts:
   http:
   shimmer:
+  dotted_border:
   flutter: 
     sdk: flutter
   pin_input_text_field: ^4.5.2
   text_form_field_validator: ^0.0.3
   shared_preferences:
   cached_network_image: ^3.2.3
+  geolocator: ^11.1.0
+  geocoding: ^3.0.0
+  google_maps_flutter: ^2.3.0
+  flutter_svg:
+  flutter_inappwebview: ^6.1.5
+  intl: ^0.20.2
+  sms_autofill: ^2.4.1
 
 dev_dependencies: 
   flutter_lints: ^2.0.0
