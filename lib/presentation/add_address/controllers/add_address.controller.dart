@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../infrastructure/navigation/routes.dart';
 import '../../../infrastructure/static/project.constants.dart';
+import '../../cart/controllers/cart.controller.dart';
 import '../../get_delivery_address/controllers/get_delivery_address.controller.dart';
 
 class Coordinates {
@@ -131,6 +132,10 @@ class AddAddressController extends GetxController with WidgetsBindingObserver {
       }
 
       debugPrint("Loaded ${_points.length} points from saved coordinates");
+      for (var point in _points) {
+        debugPrint("Pointxxxx: $point");
+        debugPrint("Pointxxxx: ");
+      }
     }
   }
 
@@ -159,6 +164,7 @@ class AddAddressController extends GetxController with WidgetsBindingObserver {
       final pos = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
       currentPosition.value = pos;
+      debugPrint("baler Position: ${pos.latitude}, ${pos.longitude}");
       currentLatLng.value = LatLng(pos.latitude, pos.longitude);
 
       setMarker(currentLatLng.value!, draggable: false);
@@ -266,6 +272,7 @@ class AddAddressController extends GetxController with WidgetsBindingObserver {
     doubleLngText.value = pos.longitude;
     debugPrint(
         "✅ Update Selected Info longitude, latitude: ${pos.longitude}, ${pos.latitude}");
+    currentLatLng.value = pos;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setDouble('order_updated_lat', pos.latitude);
     prefs.setDouble('order_updated_lng', pos.longitude);
@@ -362,6 +369,7 @@ class AddAddressController extends GetxController with WidgetsBindingObserver {
       await _saveSelectedLocation(cur, await reverseGeocode(cur));
       await _updateSelectedDeliveryAddress(cur, await reverseGeocode(cur));
       debugPrint("✅ Sadia inside polygon: ${cur.latitude}, ${cur.longitude}");
+      Get.find<CartController>().getDeliveryCharge();
       Get.offAllNamed(Routes.CART);
     } else {
       debugPrint(

@@ -37,14 +37,55 @@ class DeliveryAddress extends GetView<CartController> {
                 ],
               ),
               const SizedBox(height: 8),
-              Obx(() => Text(
-                    "${controller.deliveryAddress.value?['street'] ?? ''}, ${controller.deliveryAddress.value?['area'] ?? ''},"
-                        "${controller.deliveryAddress.value?['city'] ?? ''},${controller.deliveryAddress.value?['district'] ?? ''}",
-                    style: GoogleFonts.poppins(
-                      fontSize: 14,
-                      color: Colors.grey[700],
-                    ),
-                  )),
+              Obx(() {
+                final addresses = controller.savedAddresses;
+                final selectedIndex = controller.selectedAddressIndex.value;
+
+                if (addresses.isEmpty) {
+                  return const Text("No saved addresses");
+                }
+
+                return DropdownButton<int>(
+                  isExpanded: true,
+                  value: selectedIndex,
+
+                  // When changed, update the selected index
+                  onChanged: (value) {
+                    if (value != null) {
+                      controller.saveSelectedAddress(value);
+                    }
+                  },
+
+                  items: List.generate(
+                    addresses.length,
+                    (index) {
+                      final address = addresses[index];
+                      final formatted =
+                          "${address['street'] ?? ''}, ${address['area'] ?? ''}, ${address['city'] ?? ''}";
+
+                      return DropdownMenuItem(
+                        value: index,
+                        child: Text(
+                          formatted,
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }),
+              // const SizedBox(height: 8),
+              // Obx(() => Text(
+              //       "${controller.deliveryAddress.value?['street'] ?? ''}, ${controller.deliveryAddress.value?['area'] ?? ''},"
+              //       "${controller.deliveryAddress.value?['city'] ?? ''},${controller.deliveryAddress.value?['district'] ?? ''}",
+              //       style: GoogleFonts.poppins(
+              //         fontSize: 14,
+              //         color: Colors.grey[700],
+              //       ),
+              //     )),
             ],
           ),
         ),

@@ -10,12 +10,14 @@ class CartController extends GetxController {
   final discount = 0.0.obs;
   final subtotal = 0.0.obs;
   final total = 0.0.obs;
-  final deliveryCharge = 20.0.obs;
+  final deliveryCharge = 0.0.obs;
   final isLoading = false.obs;
   final customTipController = TextEditingController().obs;
   final cartItems = <CartItemsModel>[].obs;
   final _isLoading = false.obs;
+  final selectedAddressIndex = 0.obs;
   final deliveryAddress = Rxn<Map<String, dynamic>>();
+  final savedAddresses = <Map<String, dynamic>>[].obs;
 
   @override
   Future<void> onInit() async {
@@ -23,7 +25,22 @@ class CartController extends GetxController {
     await loadCartItems();
     await loadDeliveryAddress();
     await getDeliveryCharge();
+    await loadSavedAddress();
     debugPrint("🚚 Delivery Charge from onint: ${deliveryCharge.value}");
+  }
+
+  Future<void> loadSavedAddress() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString('saved_addresses');
+
+    if (jsonString != null) {
+      final decoded = jsonDecode(jsonString) as List;
+      savedAddresses.assignAll(decoded.cast<Map<String, dynamic>>());
+    }
+  }
+
+  void saveSelectedAddress(int index) {
+    selectedAddressIndex.value = index;
   }
 
   Future<void> loadCartItems() async {

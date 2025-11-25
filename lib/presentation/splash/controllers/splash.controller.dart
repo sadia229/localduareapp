@@ -24,7 +24,8 @@ class SplashController extends GetxController {
     final token = prefs.getString('token');
     debugPrint("Access Token $token");
     if (token != null) {
-      Get.toNamed(Routes.BOTTOM_NAVBAR);
+      // Get.toNamed(Routes.BOTTOM_NAVBAR);
+      Get.toNamed(Routes.SELECT_ADDRESS);
     } else {
       Get.toNamed(Routes.SELECT_PHONE_NUMBER);
     }

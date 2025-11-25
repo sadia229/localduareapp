@@ -63,23 +63,23 @@ class ProfileAddAddressScreen extends GetView<ProfileAddAddressController> {
               ),
 
               const SizedBox(height: 12),
-              Obx(() {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Lat: ${ctrl.latText.value}',
-                      style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      'Lng: ${ctrl.lngText.value}',
-                      style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                );
-              }),
+              // Obx(() {
+              //   return Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //         'Lat: ${ctrl.latText.value}',
+              //         style: const TextStyle(
+              //             fontSize: 14, fontWeight: FontWeight.w500),
+              //       ),
+              //       Text(
+              //         'Lng: ${ctrl.lngText.value}',
+              //         style: const TextStyle(
+              //             fontSize: 14, fontWeight: FontWeight.w500),
+              //       ),
+              //     ],
+              //   );
+              // }),
               const SizedBox(height: 16),
               TextField(
                 controller: controller.titleController,

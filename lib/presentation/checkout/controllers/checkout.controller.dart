@@ -11,7 +11,7 @@ import '../../../infrastructure/static/project.constants.dart';
 
 class CheckoutController extends GetxController {
   final subTotal = 0.0.obs;
-  final deliveryCharge = 20.0.obs;
+  final deliveryCharge = 0.0.obs;
   final total = 0.0.obs;
   final specialInstructionController = TextEditingController();
 
